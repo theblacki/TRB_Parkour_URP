@@ -3,6 +3,7 @@ using UnityEngine;
 public class HandGameEvents : MonoBehaviour
 {
     public SelectionTaskMeasure selectionTaskMeasure;
+    public OriginalGameMechanics ogm;
 
     void OnTriggerEnter(Collider other)
     {
@@ -15,6 +16,16 @@ public class HandGameEvents : MonoBehaviour
         {
             selectionTaskMeasure.isTaskStart = false;
             selectionTaskMeasure.EndOneTask();
+        }
+        else
+        {
+            bool playCollectCoinSound = true;
+            if (other.CompareTag("coin"))
+            {
+                playCollectCoinSound = false;
+                GetComponent<AudioSource>().Play();
+            }
+            ogm.HandleCollision(other, playCollectCoinSound);
         }
     }
 }
